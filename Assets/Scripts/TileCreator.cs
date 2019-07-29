@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Automatically adds required components if the object doesn't have them
+// Automatically adds required components if the GameObject doesn't have them
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class TileCreator : MonoBehaviour
 {
@@ -58,7 +58,7 @@ public class TileCreator : MonoBehaviour
 
         // Add the vertices to the mesh
         mesh.triangles = triangles;
-        // Normals are perpendicular to the object
+        // Normals are perpendicular to the GameObject
         // Recalculate the normals so the shading would look correct
         mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = mesh;

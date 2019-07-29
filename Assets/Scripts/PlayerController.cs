@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Re-enable once testing done.
+        // TODO: Re-enable once testing done
         //x = Input.location.lastData.latitude;
         //y = Input.location.lastData.longitude;
         // Target coordinates

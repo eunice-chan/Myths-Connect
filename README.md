@@ -15,6 +15,7 @@ Here's a list!
 * https://www.mvcode.com/lessons/roll-a-ball-in-unity-5-c
 
 ## Ground
+* https://answers.unity.com/questions/9633/possible-infinite-terrain-plane.html
 * https://docs.unity3d.com/Manual/Example-CreatingaBillboardPlane.html
 * https://catlikecoding.com/unity/tutorials/procedural-grid/
 * https://docs.unity3d.com/ScriptReference/Object.Instantiate.html
