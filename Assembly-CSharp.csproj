@@ -65,6 +65,7 @@
     <Compile Include="Assets\Resources\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Resources\Scripts\TileCreator.cs" />
     <Compile Include="Assets\Resources\Scripts\TilePoolCreator.cs" />
+    <None Include="Assets\Resources\Font\Readme.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/eunice/Desktop/Eunice's/Git/Myths Connect/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

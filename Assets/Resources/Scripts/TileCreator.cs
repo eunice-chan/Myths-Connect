@@ -98,14 +98,13 @@ public class TileCreator : MonoBehaviour
             int XCoord = rand.Next(size) - size / 2;
             int YCoord = rand.Next(size) - size / 2;
             NPCPool[i].transform.position = new Vector3(XCoord, 0, YCoord) + this.transform.position + this.transform.parent.transform.position;
-            print(NPCPool[i].transform.position);
             for (int j = 0; j < takenSpots.Count; j++)
             {
                 while (Vector3.Distance(NPCPool[i].transform.position, takenSpots[j]) < tolerance)
                 {
                     XCoord = rand.Next(size) - size / 2;
                     YCoord = rand.Next(size) - size / 2;
-                    NPCPool[i].transform.position = new Vector3(XCoord, 0, YCoord) + this.transform.position;
+                    NPCPool[i].transform.position = new Vector3(XCoord, 0, YCoord) + this.transform.position + this.transform.parent.transform.position;
                 }
             }
             takenSpots.Add(NPCPool[i].transform.position);

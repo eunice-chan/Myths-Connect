@@ -1,16 +1,18 @@
-﻿<Properties StartupConfiguration="{FFF14803-387D-A48B-95F9-B3E0F15B4E98}|">
+﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Scripts/MythOnTap.cs">
     <Files>
-      <File FileName="Assets/Resources/Scripts/CameraController.cs" Line="12" Column="18" />
-      <File FileName="Assets/Resources/Scripts/PlayerController.cs" Line="13" Column="20" />
-      <File FileName="Assets/Resources/Scripts/TilePoolCreator.cs" Line="125" Column="61" />
-      <File FileName="Assets/Resources/Scripts/TileCreator.cs" Line="112" Column="18" />
-      <File FileName="Assets/Resources/Scripts/MythOnTap.cs" Line="273" Column="16" />
+      <File FileName="Assets/Resources/Scripts/TileCreator.cs" Line="114" Column="1" />
+      <File FileName="Assets/Resources/Scripts/MythOnTap.cs" Line="330" Column="32" />
+      <File FileName="Assets/Resources/Scripts/TilePoolCreator.cs" />
+      <File FileName="Assets/Resources/Scripts/PlayerController.cs" />
+      <File FileName="Assets/Resources/Scripts/CameraController.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>Assembly-CSharp.csproj</String>
+  </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="938a776e-0168-406e-8e05-931ea2f8eeca" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

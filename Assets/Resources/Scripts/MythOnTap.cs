@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public struct Myth
 {
@@ -234,18 +236,57 @@ public class MythOnTap : MonoBehaviour
             "held in the open air at night, with the stars shining down on the wide-extending plain walled in by the giant Sierras, fringed at the base with " +
             "dark pines, and with their peaks white with eternal snows. Under such circumstances this song of the snow lying white upon the mountains, and " +
             "the Milky Way stretching across the clear sky, brings up to the Paiute the same patriotic home love that comes from lyrics of singing birds and " +
-            "leafy trees and still waters to the people of more favored regions. . . . The Milky Way is the road of the dead to the spirit world.\"")
-    };
+            "leafy trees and still waters to the people of more favored regions. . . . The Milky Way is the road of the dead to the spirit world.\""),
+
+		new Myth(
+			new float[] {20, 50}, new float[] {-50, -200},
+			"CALIFORNA", "TEST MYTH NAMEEEEEE",
+			"The snow lies there - ro-rani! The snow lies there - ro-rani! The snow lies there - ro-rani! The snow lies there - ro-rani!"+
+			"Another day when he was travelling around, Coyote met a deer with two fawns. The fawns were beautifully spotted, and he said to the deer, " +
+			"\"How did you paint your children? They are so beautiful!\" Deer replied, \"I painted them with fire from the cedar.\" \"And how did you do " +
+			"the work?\" asked Coyote. \"I put my children into a cave and built a fire of cedar in front of it. Every time a spark flew from the fire it " +
+			"struck my children, making a beautiful spot.\" \"Oh,\" said Coyote, \"I will do the same thing. Then I will make my children beautiful.\" He " +
+			"hurried to his house and put his children in a cave. Then he built a fire of cedar in front of it and stood off to watch the fire. But the " +
+			"children cried because the fire was very hot. Coyote kept calling to them not to cry because they would be beautiful like the deer. After a " +
+			"time the crying ceased and Coyote was pleased. But when the fire died down, he found they were burned to death. Coyote expected to find them " +
+			"beautiful, but instead they were dead. Then he was enraged with the deer and ran away to hunt her, but he could not find her anywhere. He was " +
+			"much distressed to think the deer had fooled him so easily.")
+	};
 
     GameObject player;
     static System.Random rand = new System.Random();
 
+	public CanvasGroup canvasGroup;
+	public Text title;
+	public Text content;
+
     void Start()
     {
         player = GameObject.Find("Player");
-    }
+		canvasGroup = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
+		title = GameObject.Find("Title").GetComponent<Text>();
+		content = GameObject.Find("Text").GetComponent<Text>();
+		HideUI();
 
-    bool InRange(float val, float min, float max)
+	}
+
+	void HideUI()
+	{
+        // Make everything transparent
+		canvasGroup.alpha = 0f;
+        // Prevent UI elements from receiving input
+		canvasGroup.blocksRaycasts = false;
+	}
+
+    void ShowUI()
+	{
+		// Make everything opaque
+		canvasGroup.alpha = 1f;
+		// Allow UI elements to receive input
+		canvasGroup.blocksRaycasts = true;
+	}
+
+	bool InRange(float val, float min, float max)
     {
         return min <= val && val <= max;
     }
@@ -257,7 +298,6 @@ public class MythOnTap : MonoBehaviour
         {
             if (InRange(x, myth.MinRangeX, myth.MaxRangeX) && InRange(y, myth.MinRangeY, myth.MaxRangeY))
             {
-                print(myth.name);
                 MythsNearCoord.Add(myth);
             }
         }
@@ -281,9 +321,14 @@ public class MythOnTap : MonoBehaviour
             return new Myth("Hello World!");
         }
     }
-    void OnMouseUpAsButton()
+	void OnMouseUpAsButton()
 	{
-        print(this.transform.position);
-        print(GenerateMyth().name);
+		if (!EventSystem.current.IsPointerOverGameObject())
+		{
+			Myth myth = GenerateMyth();
+			title.text = myth.source + ": " + myth.name;
+			content.text = myth.content;
+			ShowUI();
+		}
 	}
 }
