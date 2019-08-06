@@ -256,9 +256,10 @@ public class MythOnTap : MonoBehaviour
     GameObject player;
     static System.Random rand = new System.Random();
 
-	public CanvasGroup canvasGroup;
-	public Text title;
-	public Text content;
+	CanvasGroup canvasGroup;
+	Text title;
+	Text content;
+	Scrollbar scrollbar;
 
     void Start()
     {
@@ -266,6 +267,7 @@ public class MythOnTap : MonoBehaviour
 		canvasGroup = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
 		title = GameObject.Find("Title").GetComponent<Text>();
 		content = GameObject.Find("Text").GetComponent<Text>();
+		scrollbar = GameObject.Find("Scrollbar Vertical").GetComponent<Scrollbar>();
 		HideUI();
 
 	}
@@ -328,6 +330,7 @@ public class MythOnTap : MonoBehaviour
 			Myth myth = GenerateMyth();
 			title.text = myth.source + ": " + myth.name;
 			content.text = myth.content;
+			scrollbar.value = 1f;
 			ShowUI();
 		}
 	}

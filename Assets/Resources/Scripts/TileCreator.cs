@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
 // Automatically adds required components if the GameObject doesn't have them
@@ -18,15 +19,20 @@ public class TileCreator : MonoBehaviour
     static int maxNPC = 3;
     GameObject[] NPCPool = new GameObject[maxNPC];
 	GameObject player;
+	Vector3 playerPosition;
 
-    static System.Random rand = new System.Random();
+
+	static System.Random rand = new System.Random();
 
     void Start()
     {
 		NPCPrefabs.Add((GameObject)Resources.Load("Prefabs/NPC"));
 
 		player = GameObject.Find("Player");
-		Vector3 playerPosition = player.transform.position;
+		playerPosition = player.transform.position;
+
+		StartCoroutine(SetTexture());
+
 		float margin = ((float)size / 2);
 		x = playerPosition.x - margin;
 		y = playerPosition.z - margin;
@@ -75,11 +81,11 @@ public class TileCreator : MonoBehaviour
         mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = mesh;
 
-        InstantiateNPCs();
+		InstantiateNPCs();
 		ActivateNPCs();
     }
 
-    void InstantiateNPCs() {
+	void InstantiateNPCs() {
         for (int i = 0; i < maxNPC; i++)
         {
             NPCPool[i] = Instantiate(NPCPrefabs[rand.Next(NPCPrefabs.Count)], this.transform);
@@ -119,5 +125,34 @@ public class TileCreator : MonoBehaviour
 			NPC.SetActive(false);
 		}
 
+	}
+
+	IEnumerator SetTexture()
+	{
+		float x = this.transform.position.x + playerPosition.x;
+		float y = this.transform.position.z + playerPosition.z;
+		string bottomLeft = x + "," + y;
+
+		float UpperX = x + size;
+		float UpperY = y + size;
+		string upperRight = UpperX + "," + UpperY;
+
+		string url = "http://www2.demis.nl/wms/wms.asp?Service=WMS&WMS=BlueMarble&Version=1.1.0&Request=GetMap&BBox=" + bottomLeft + "," + upperRight + "&SRS=EPSG:4326&Width=100&Height=100&Layers=Earth%20Image&Format=image/png";
+
+		print(bottomLeft);
+		print(upperRight);
+		print(url);
+
+		UnityWebRequest img = UnityWebRequestTexture.GetTexture(url);
+		yield return img.SendWebRequest();
+
+		if (img.isNetworkError || img.isHttpError)
+		{
+			Debug.Log(img.error);
+		}
+		else
+		{
+			this.GetComponent<Renderer>().material.mainTexture = ((DownloadHandlerTexture)img.downloadHandler).texture;
+		}
 	}
 }

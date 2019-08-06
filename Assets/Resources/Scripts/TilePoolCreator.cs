@@ -55,7 +55,7 @@ public class TilePoolCreator : MonoBehaviour
         GameObject DLtile = Instantiate(tilePrefab, DLVector, Quaternion.identity, this.transform);
         GameObject Dtile = Instantiate(tilePrefab, DVector, Quaternion.identity, this.transform);
         GameObject DRtile = Instantiate(tilePrefab, DRVector, Quaternion.identity, this.transform);
-        
+
         tilePool = new GameObject[]
         {
             ULtile,
@@ -69,8 +69,13 @@ public class TilePoolCreator : MonoBehaviour
             DRtile
 
         };
-    }
-    
+
+        foreach (GameObject tile in tilePool)
+		{
+			print(tile.transform.position);
+		}
+	}
+    /*
     void Update()
     {
         // Look at which tile the player is on
@@ -456,5 +461,5 @@ public class TilePoolCreator : MonoBehaviour
         }
         // Else, false
         return false;
-    }
+    }*/
 }
