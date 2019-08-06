@@ -20,3 +20,10 @@ Here's a list!
 * https://catlikecoding.com/unity/tutorials/procedural-grid/
 * https://docs.unity3d.com/ScriptReference/Object.Instantiate.html
 * https://docs.unity3d.com/ScriptReference/Bounds.Contains.html
+* https://answers.unity.com/questions/173480/applying-a-texture-to-a-plane.html
+* https://docs.unity3d.com/530/Documentation/ScriptReference/Texture2D.LoadImage.html
+
+## Scrolling Display
+* https://unitycoder.com/blog/2016/02/23/ui-scroll-view-automatic-content-height/
+* https://docs.unity3d.com/Manual/HOWTO-UIFitContentSize.html
+* https://forum.unity.com/threads/how-to-set-the-scrolling-position-of-a-scroll-bar.381058/
