@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine;
@@ -10,8 +11,10 @@ public class TileCreator : MonoBehaviour
     public static int size = 50;
     // Latitude
     public static float x;
+	int maxLat = 90;
     // Longitude
 	public static float y;
+	int maxLong = 180;
 
 	GameObject player;
 	Vector3 playerPosition;
@@ -23,6 +26,7 @@ public class TileCreator : MonoBehaviour
 
 
 	static System.Random rand = new System.Random();
+    int res = 100;
 
     void Start()
     {
@@ -131,18 +135,54 @@ public class TileCreator : MonoBehaviour
 
 	public IEnumerator SetTexture()
 	{
-		float xCoord = this.transform.position.x + playerPosition.x;
-		float yCoord = this.transform.position.z + playerPosition.z;
-		string bottomLeft = xCoord + "," + yCoord;
+		float xCoord = playerPosition.x + this.transform.position.z;
+		float yCoord = playerPosition.z + this.transform.position.x;
 
-		float UpperX = xCoord + size;
-		float UpperY = yCoord + size;
-		string upperRight = UpperX + "," + UpperY;
+		float UpperX = xCoord - size;
+		float UpperY = yCoord - size;
 
-		string url = "http://www2.demis.nl/wms/wms.asp?Service=WMS&WMS=BlueMarble&Version=1.1.0&Request=GetMap&BBox=" + bottomLeft + "," + upperRight + "&SRS=EPSG:4326&Width=100&Height=100&Layers=Earth%20Image&Format=image/png";
+		if (UpperX > maxLat || UpperY > maxLong)
+		{
+			if (UpperX > maxLat)
+			{
+				bool xNeg;
+				if (UpperX > 0)
+				{
+					xNeg = false;
+				}
+				else
+				{
+					xNeg = true;
+				}
+				UpperX = Math.Abs(UpperX % maxLat);
+				if (xNeg)
+				{
+					UpperX = -UpperX;
+				}
+			}
+			if (UpperY > maxLong)
+			{
+				bool yNeg;
+				if (UpperY > 0)
+				{
+					yNeg = false;
+				}
+				else
+				{
+					yNeg = true;
+				}
+				UpperY = Math.Abs(UpperY % maxLong);
+				if (yNeg)
+				{
+					UpperY = -UpperY;
+				}
+			}
+		}
 
-		print(bottomLeft);
-		print(upperRight);
+		string bottomLeft = Math.Min(yCoord, UpperY) + "," + Math.Min(xCoord, UpperX);
+		string upperRight = Math.Max(yCoord, UpperY) + "," + Math.Max(xCoord, UpperX);
+
+		string url = "http://www2.demis.nl/wms/wms.asp?Service=WMS&WMS=BlueMarble&Version=1.1.0&Request=GetMap&BBox=" + bottomLeft + "," + upperRight + "&SRS=EPSG:4326&Width=" + res + "&Height=" + res + "&Layers=Earth%20Image&Format=image/png";
 		print(url);
 
 		UnityWebRequest img = UnityWebRequestTexture.GetTexture(url);
