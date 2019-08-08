@@ -13,20 +13,20 @@ public class TileCreator : MonoBehaviour
     // Longitude
 	public static float y;
 
-    List<GameObject> NPCPrefabs = new List<GameObject>();
-
-    static int minNPC = 0;
-    static int maxNPC = 3;
-    GameObject[] NPCPool = new GameObject[maxNPC];
 	GameObject player;
 	Vector3 playerPosition;
+
+	GameObject NPC;
+	static int minNPC = 0;
+    static int maxNPC = 3;
+    GameObject[] NPCPool = new GameObject[maxNPC];
 
 
 	static System.Random rand = new System.Random();
 
     void Start()
     {
-		NPCPrefabs.Add((GameObject)Resources.Load("Prefabs/NPC"));
+		NPC = (GameObject)Resources.Load("Prefabs/NPC");
 
 		player = GameObject.Find("Player");
 		playerPosition = player.transform.position;
@@ -85,56 +85,58 @@ public class TileCreator : MonoBehaviour
 		ActivateNPCs();
     }
 
-	void InstantiateNPCs() {
-        for (int i = 0; i < maxNPC; i++)
-        {
-            NPCPool[i] = Instantiate(NPCPrefabs[rand.Next(NPCPrefabs.Count)], this.transform);
-			NPCPool[i].SetActive(false);
-        }
-    }
-        
-    public void ActivateNPCs()
-    {
-        int NumNPC = rand.Next(minNPC, maxNPC + 1);
-        int tolerance = 2;
-        List<Vector3> takenSpots = new List<Vector3>();
-        takenSpots.Add(player.transform.position);
-        for (int i = 0; i < NumNPC; i++)
+	void InstantiateNPCs()
+	{
+		for (int i = 0; i < maxNPC; i++)
 		{
-            int XCoord = rand.Next(size) - size / 2;
-            int YCoord = rand.Next(size) - size / 2;
-            NPCPool[i].transform.position = new Vector3(XCoord, 0, YCoord) + this.transform.position + this.transform.parent.transform.position;
-            for (int j = 0; j < takenSpots.Count; j++)
-            {
-                while (Vector3.Distance(NPCPool[i].transform.position, takenSpots[j]) < tolerance)
-                {
-                    XCoord = rand.Next(size) - size / 2;
-                    YCoord = rand.Next(size) - size / 2;
-                    NPCPool[i].transform.position = new Vector3(XCoord, 0, YCoord) + this.transform.position + this.transform.parent.transform.position;
-                }
-            }
-            takenSpots.Add(NPCPool[i].transform.position);
+			NPCPool[i] = Instantiate(NPC, this.transform);
+			NPCPool[i].transform.position = NPCPool[i].transform.position + new Vector3(0, 0.5f, 0);
+			NPCPool[i].SetActive(false);
+		}
+	}
+
+	public void ActivateNPCs()
+	{
+		int NumNPC = rand.Next(minNPC, maxNPC + 1);
+		int tolerance = 2;
+		List<Vector3> takenSpots = new List<Vector3>();
+		takenSpots.Add(player.transform.position);
+		for (int i = 0; i < NumNPC; i++)
+		{
+			int XCoord = rand.Next(size) - size / 2;
+			int YCoord = rand.Next(size) - size / 2;
+			NPCPool[i].transform.position = new Vector3(XCoord, NPCPool[i].transform.position.y, YCoord) + this.transform.position + this.transform.parent.transform.position;
+			for (int j = 0; j < takenSpots.Count; j++)
+			{
+				while (Vector3.Distance(NPCPool[i].transform.position, takenSpots[j]) < tolerance)
+				{
+					XCoord = rand.Next(size) - size / 2;
+					YCoord = rand.Next(size) - size / 2;
+					NPCPool[i].transform.position = new Vector3(XCoord, NPCPool[i].transform.position.y, YCoord) + this.transform.position + this.transform.parent.transform.position;
+				}
+			}
+			takenSpots.Add(NPCPool[i].transform.position);
 			NPCPool[i].SetActive(true);
-        }
-    }
+		}
+	}
 
     public void DeactivateNPCs()
 	{
-		foreach(GameObject NPC in NPCPool)
+		foreach(GameObject n in NPCPool)
 		{
-			NPC.SetActive(false);
+			n.SetActive(false);
 		}
 
 	}
 
-	IEnumerator SetTexture()
+	public IEnumerator SetTexture()
 	{
-		float x = this.transform.position.x + playerPosition.x;
-		float y = this.transform.position.z + playerPosition.z;
-		string bottomLeft = x + "," + y;
+		float xCoord = this.transform.position.x + playerPosition.x;
+		float yCoord = this.transform.position.z + playerPosition.z;
+		string bottomLeft = xCoord + "," + yCoord;
 
-		float UpperX = x + size;
-		float UpperY = y + size;
+		float UpperX = xCoord + size;
+		float UpperY = yCoord + size;
 		string upperRight = UpperX + "," + UpperY;
 
 		string url = "http://www2.demis.nl/wms/wms.asp?Service=WMS&WMS=BlueMarble&Version=1.1.0&Request=GetMap&BBox=" + bottomLeft + "," + upperRight + "&SRS=EPSG:4326&Width=100&Height=100&Layers=Earth%20Image&Format=image/png";

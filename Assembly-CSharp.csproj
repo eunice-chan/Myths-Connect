@@ -63,6 +63,7 @@
     <Compile Include="Assets\Resources\Scripts\CameraController.cs" />
     <Compile Include="Assets\Resources\Scripts\MythOnTap.cs" />
     <Compile Include="Assets\Resources\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Rotator.cs" />
     <Compile Include="Assets\Resources\Scripts\TileCreator.cs" />
     <Compile Include="Assets\Resources\Scripts\TilePoolCreator.cs" />
     <None Include="Assets\Resources\Font\Readme.txt" />
