@@ -50,12 +50,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // TODO: Re-enable once testing done
-        //x = Input.location.lastData.latitude;
-        //y = Input.location.lastData.longitude;
-        // Target coordinates
-        Vector3 target = new Vector3(x, 0, y);
-        // Move player to the target coordinates
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-    }
+		// TODO: Re-enable once testing done
+		//x = Input.location.lastData.latitude;
+		//y = Input.location.lastData.longitude;
+		// Target coordinates
+		//Vector3 target = new Vector3(x, 0, y);
+		// Move player to the target coordinates
+		//transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		float vert = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+		float horiz = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+
+		// Move the player
+		this.transform.Translate(horiz, -vert, 0);
+	}
 }

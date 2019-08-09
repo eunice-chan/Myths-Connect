@@ -141,44 +141,6 @@ public class TileCreator : MonoBehaviour
 		float UpperX = xCoord - size;
 		float UpperY = yCoord - size;
 
-		if (UpperX > maxLat || UpperY > maxLong)
-		{
-			if (UpperX > maxLat)
-			{
-				bool xNeg;
-				if (UpperX > 0)
-				{
-					xNeg = false;
-				}
-				else
-				{
-					xNeg = true;
-				}
-				UpperX = Math.Abs(UpperX % maxLat);
-				if (xNeg)
-				{
-					UpperX = -UpperX;
-				}
-			}
-			if (UpperY > maxLong)
-			{
-				bool yNeg;
-				if (UpperY > 0)
-				{
-					yNeg = false;
-				}
-				else
-				{
-					yNeg = true;
-				}
-				UpperY = Math.Abs(UpperY % maxLong);
-				if (yNeg)
-				{
-					UpperY = -UpperY;
-				}
-			}
-		}
-
 		string bottomLeft = Math.Min(yCoord, UpperY) + "," + Math.Min(xCoord, UpperX);
 		string upperRight = Math.Max(yCoord, UpperY) + "," + Math.Max(xCoord, UpperX);
 
