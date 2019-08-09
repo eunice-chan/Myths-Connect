@@ -12,7 +12,7 @@ public class TilePoolCreator : MonoBehaviour
 	float x = 0;
 	// Longitude
 	float y = 0;
-	int size = 50;
+	int size;
 
 	Vector3 ULVector;
 	Vector3 UVector;
@@ -26,6 +26,7 @@ public class TilePoolCreator : MonoBehaviour
 
 	void Start()
 	{
+		size = TileCreator.size;
 		tilePrefab = (GameObject)Resources.Load("Prefabs/GroundTile");
 
 		player = GameObject.Find("Player");

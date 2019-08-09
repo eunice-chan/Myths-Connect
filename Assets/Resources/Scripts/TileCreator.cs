@@ -8,13 +8,14 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class TileCreator : MonoBehaviour
 {
-    public static int size = 50;
+    public static int size = 30;
     // Latitude
     public static float x;
 	int maxLat = 90;
     // Longitude
 	public static float y;
 	int maxLong = 180;
+	float margin;
 
 	GameObject player;
 	Vector3 playerPosition;
@@ -37,7 +38,8 @@ public class TileCreator : MonoBehaviour
 
 		StartCoroutine(SetTexture());
 
-		float margin = ((float)size / 2);
+		margin = ((float) size) / 2;
+		print(margin);
 		x = playerPosition.x - margin;
 		y = playerPosition.z - margin;
 
@@ -135,16 +137,45 @@ public class TileCreator : MonoBehaviour
 
 	public IEnumerator SetTexture()
 	{
-		float xCoord = playerPosition.x + this.transform.position.z;
-		float yCoord = playerPosition.z + this.transform.position.x;
+		margin = ((float)size) / 2;
+		float max_y = playerPosition.z + this.transform.position.x + margin;
+		float max_x = playerPosition.x + this.transform.position.z + margin;
 
-		float UpperX = xCoord - size;
-		float UpperY = yCoord - size;
+		while (max_y < -maxLong)
+		{
+			max_y += maxLong * 2;
 
-		string bottomLeft = Math.Min(yCoord, UpperY) + "," + Math.Min(xCoord, UpperX);
-		string upperRight = Math.Max(yCoord, UpperY) + "," + Math.Max(xCoord, UpperX);
+		}
+		while (max_y > maxLong)
+		{
+			max_y -= maxLong * 2;
 
-		string url = "http://www2.demis.nl/wms/wms.asp?Service=WMS&WMS=BlueMarble&Version=1.1.0&Request=GetMap&BBox=" + bottomLeft + "," + upperRight + "&SRS=EPSG:4326&Width=" + res + "&Height=" + res + "&Layers=Earth%20Image&Format=image/png";
+		}
+		while (max_x < -maxLat)
+		{
+			max_x += maxLat * 2;
+
+		}
+		while (max_x > maxLat)
+		{
+			max_x -= maxLat * 2;
+
+		}
+
+		float min_y = max_y - size;
+		float min_x = max_x - size;
+
+        // This stretches the tiles to hide the issues.
+		//if (min_y < -180) { min_y = -180; }
+		//if (min_x < -90) { min_x = -90; }
+
+		//if (max_y > 180) { max_y = 180; }
+		//if (max_x > 90) { max_x = 90; }
+
+		string BL = min_y + "," + min_x;
+		string UR = max_y + "," + max_x;
+
+		string url = "http://www2.demis.nl/wms/wms.asp?Service=WMS&WMS=BlueMarble&Version=1.1.0&Request=GetMap&BBox=" + BL + "," + UR + "&SRS=EPSG:4326&Width=" + res + "&Height=" + res + "&Layers=Earth%20Image&Format=image/png";
 		print(url);
 
 		UnityWebRequest img = UnityWebRequestTexture.GetTexture(url);
