@@ -1,5 +1,5 @@
 # Myths-Connect
-An immersive archive made for DIGHUM160A. A Unity game similar to Pokemon Go/Animal Crossing but with myths indigenous to the region.
+An immersive archive made for DIGHUM160A. A Unity game similar to Pokemon Go/Animal Crossing but with myths indigenous to the region. I ended up dropping this and switching to another project because it was difficult working out the map issues with the fast-approaching deadline, but I learned a lot.
 
 I know very little about Unity or virtual game creation so not much has been implemented yet!
 
